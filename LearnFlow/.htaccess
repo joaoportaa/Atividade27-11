@@ -1,0 +1,31 @@
+Ativa o módulo de reescrita
+
+RewriteEngine On
+
+-----------------------------------------------------
+
+REGRA CRUCIAL: Exclui arquivos e diretórios existentes
+
+-----------------------------------------------------
+
+Se a requisição for para um arquivo real que existe no disco, pare e sirva esse arquivo diretamente.
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+Se a requisição for para um diretório real que existe no disco, pare e sirva o conteúdo desse diretório.
+
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+-----------------------------------------------------
+
+REGRA DE ROTEAMENTO: Manda todo o resto para o index.php
+
+-----------------------------------------------------
+
+Se a requisição não corresponde a um arquivo ou diretório existente,
+
+redireciona para o index.php, preservando a query string (o "?page=home" etc.)
+
+RewriteRule ^(.*)$ index.php [QSA,L
